@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/jojanper/react-app.svg?branch=master)](https://travis-ci.org/jojanper/react-app)
+
 # react-app
 > React application prototyping.
 
@@ -39,6 +41,11 @@ npm run build
 ```
 
 ### Continuous Integration (CI)
+
+#### Travis CI
+https://travis-ci.org/jojanper/react-app
+
+#### Jenkins
 `Jenkinsfile.groovy` contains script to implement Pipeline as code workflow for Jenkins. For more details see
 https://jenkins.io/solutions/pipeline/.
 
