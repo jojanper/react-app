@@ -1,5 +1,9 @@
+const appConfig = require('./scripts/webpack_data.js');
+const loaders = appConfig.moduleLoaders;
+
 module.exports = function (config) {
     config.set({
+        basePath: '',
         browsers: [process.env.CONTINUOUS_INTEGRATION ? 'PhantomJS' : 'Chrome'],
         singleRun: true,
         frameworks: ['mocha'],
@@ -7,43 +11,23 @@ module.exports = function (config) {
             'tests.webpack.js'
         ],
         preprocessors: {
-            'tests.webpack.js': ['webpack', 'sourcemap']
+            'tests.webpack.js': ['webpack', 'sourcemap', 'sourcemap-writer', 'coverage'],
         },
-        reporters: ['dots'],
+        reporters: ['mocha', 'coverage'],
         webpack: {
             devtool: 'inline-source-map',
             module: {
-                loaders: [
-                    {
-                        test: /\.js$/,
-                        loader: 'babel-loader',
-                        exclude: /node_modules/,
-                        query: {
-                            presets: ['es2015', 'react']
-                        }
-                    },
-                    // LESS styles
-                    {
-                        test: /\.less$/,
-                        loader: 'style-loader!css-loader!less-loader'
-                    },
-
-                    // CSS styles
-                    {
-                        test: /\.css$/,
-                        loader: 'style-loader!css-loader'
-                    },
-
-                    // SASS styles
-                    {
-                        test: /\.scss$/,
-                        loader: 'style-loader!css-loader!sass-loader'
-                    }
-                ]
+                loaders: loaders
             }
         },
         webpackServer: {
             noInfo: true
+        },
+        coverageReporter: {
+            subdir: '.',
+            dir : appConfig.coverage.dst,
+            type: appConfig.coverage.type,
+            file: appConfig.coverage.jsonName
         }
     });
 };

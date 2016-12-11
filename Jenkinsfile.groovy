@@ -27,11 +27,16 @@ node {
 
     stage('Code style')
     {
-        sh 'npm run-script eslint';
+        sh 'npm run eslint';
     }
 
     stage('Unit tests')
     {
         sh 'npm test';
+    }
+
+    stage('Build')
+    {
+        sh 'npm run build';
     }
 }
