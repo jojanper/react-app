@@ -17,6 +17,10 @@ class App extends React.Component {
       </div>
     );
   }
+
+  render3() {
+    console.log('HEP');
+  }
 }
 
 export default App;

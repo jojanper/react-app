@@ -1,56 +1,11 @@
-const path = require('path');
+const config = require('./scripts/webpack_data.js');
 
 module.exports = {
-    entry: './src/main.js',
+    entry: config.entry,
     output: {
-        filename: './dist/bundle.js'
+        filename: config.distFile,
     },
     module: {
-        loaders: [
-            // Linting
-            {
-                test: /\.js$/,
-                loader: 'eslint-loader',
-                exclude: /node_modules/,
-                enforce: 'pre',
-                query: {
-                    configFile: path.join(__dirname, '.eslintrc')
-                }
-            },
-
-            // JavaScript transpiling
-            {
-                test: /\.js$/,
-                loader: 'babel-loader',
-                exclude: /node_modules/,
-                query: {
-                    presets: ['es2015', 'react']
-                }
-            },
-
-            // LESS styles
-            {
-                test: /\.less$/,
-                loader: 'style-loader!css-loader!less-loader'
-            },
-
-            // CSS styles
-            {
-                test: /\.css$/,
-                loader: 'style-loader!css-loader'
-            },
-
-            // SASS styles
-            {
-                test: /\.scss$/,
-                loader: 'style-loader!css-loader!sass-loader'
-            },
-
-            // Inline base64 URLs for <=8k images, direct URLs for the rest
-            {
-                test: /\.(png|jpg)$/,
-                loader: 'url-loader?limit=8192'
-            }
-        ]
+        loaders: [config.eslint].concat(config.moduleLoaders)
     }
 };
